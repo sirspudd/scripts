@@ -1,14 +1,19 @@
 #!/usr/bin/env sh
 
-pid=$(pidof qtcreator-bin)
+if [[ "$(uname -s)" -eq "Darwin" ]]; then
+  open -a "Qt Creator" $@
+else
+  pid=$(pidof qtcreator-bin)
 
-# find existing creator instance
-if [[ "${pid}" != "" ]]; then
-  creatorbin=$(ls -l /proc/${pid}/exe | awk '{ print $11 }')
-  ${creatorbin} -client $@
-  exit 0
+  # find existing creator instance
+  if [[ "${pid}" != "" ]]; then
+    creatorbin=$(ls -l /proc/${pid}/exe | awk '{ print $11 }')
+    ${creatorbin} -client $@
+    exit 0
+  fi
+
+  # failing that run the creator in your path
+  qtcreator.sh $@
 fi
 
-# failing that run the creator in your path
-qtcreator.sh $@
 exit 0
