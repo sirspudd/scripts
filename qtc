@@ -1,6 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-if [[ "$(uname -s)" -eq "Darwin" ]]; then
+if [[ "$(uname -s)" = "Darwin" ]]; then
   open -a "Qt Creator" $@
 else
   pid=$(pidof qtcreator-bin)
